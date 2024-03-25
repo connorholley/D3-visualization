@@ -1,0 +1,100 @@
+{
+    "canada": {
+      "Alberta": {
+        
+        "ratio": 1.5,
+        "is_rent_controlled":0,
+        "longitude": -116.5765,
+        "latitude": 53.9333
+      },
+      "British Columbia": {
+    
+        "ratio": 2.5,
+        "is_rent_controlled":1,
+        "longitude": -127.6476,
+        "latitude": 53.7267
+      },
+      "Manitoba": {
+      
+        "ratio": 1.2,
+        "is_rent_controlled":1,
+
+        "population": 1338109,
+        "longitude": -98.8139,
+        "latitude": 53.7609
+      },
+      "New Brunswick": {
+ 
+        "ratio": 2.25,
+  
+        "is_rent_controlled":0,
+    
+        "longitude": -66.4619,
+        "latitude": 46.5653
+      },
+      "Newfoundland and Labrador": {
+   
+        "ratio": 0.9,
+        "is_rent_controlled":0,
+
+        "longitude": -57.6604,
+        "latitude": 53.1355
+      },
+      "Northwest Territories": {
+
+        "ratio": 1,
+        "is_rent_controlled":0,
+
+        "longitude": -124.8457,
+        "latitude": 64.8255
+      },
+      "Nova Scotia": {
+     
+        "ratio": 1.2,
+        "is_rent_controlled":0,
+
+        "longitude": -63.7443,
+        "latitude": 44.682
+      },
+      "Ontario": {
+   
+        "ratio": 1.8,
+        "is_rent_controlled":1,
+
+        "longitude": -85.3232,
+        "latitude": 51.2538
+      },
+      "Prince Edward Island": {
+
+        "ratio": 2.8,
+        "is_rent_controlled":1,
+
+        "longitude": -63.4168,
+        "latitude": 46.5107
+      },
+      "Québec": {
+
+        "ratio": 1.9,
+        "is_rent_controlled":1,
+
+        "longitude": -73.5491,
+        "latitude": 52.9399
+      },
+      "Saskatchewan": {
+ 
+        "ratio": 2,
+        "is_rent_controlled":0,
+
+        "longitude": -106.4509,
+        "latitude": 52.9399
+      },
+      "Yukon": {
+    
+        "ratio": 1,
+        "is_rent_controlled":1,
+
+        "longitude": -135,
+        "latitude": 64
+      }
+    }
+  }

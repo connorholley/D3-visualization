@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Visualization</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="//d3js.org/queue.v1.min.js"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
+    <!-- Add your JavaScript file for the new tab -->
+    <style>
+      .container {
+        position: relative;
+      }
+
+      .toolTip {
+        position: absolute;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #000;
+        pointer-events: none;
+        display: none;
+      }
+
+      .legend {
+        font-size: 12px;
+      }
+
+      /* Styles for tabs */
+      .tab {
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-bottom: none;
+      }
+
+      .tab-content {
+        display: none;
+        padding: 20px;
+        border: 1px solid #ccc;
+      }
+
+      .active {
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Interactive Visualization</h1>
+    <!-- Tabs -->
+    <div class="tab" id="chloropleth-tab">Rent To Own Chloropleth</div>
+    <div class="tab" id="rent-control-tab">Rent Control</div>
+    <!-- Add the new tab -->
+    <div class="tab" id="bc-rent-tab">BC Renters by age</div>
+    <div class="tab" id="bc-own-tab">BC Owners by age</div>
+
+    <!-- Tab contents -->
+    <div class="tab-content" id="chloropleth-content">
+      <div class="container"></div>
+    </div>
+    <div class="tab-content" id="rent-control-content">
+      <!-- Content for rent control visualization goes here -->
+    </div>
+    <!-- Add the content area for the new tab -->
+    <div class="tab-content" id="bc-rent-content">
+      <div>BC Renters By Age</div>
+
+      <div id="pie-chart-container-rent" class="container"></div>
+      <div id="legend-container-rent" class="legend"></div>
+    </div>
+
+    <div class="tab-content" id="bc-own-content">
+      <div>BC Owners By Age</div>
+
+      <div id="pie-chart-container-own" class="container"></div>
+      <div id="legend-container-own" class="legend"></div>
+    </div>
+    <script>
+      // Initialize flags to track whether charts and maps are created
+      let chloroplethLoaded = false;
+      let rentControlLoaded = false;
+      let pieChartsLoaded = false;
+
+      // Function to handle tab switching
+      function switchTab(tabId) {
+        // Hide all tab contents
+        document.querySelectorAll(".tab-content").forEach((content) => {
+          content.style.display = "none";
+        });
+        // Remove 'active' class from all tabs
+        document.querySelectorAll(".tab").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+        // Show the selected tab content and mark it as active
+        document.getElementById(tabId + "-content").style.display = "block";
+        document.getElementById(tabId + "-tab").classList.add("active");
+
+        // Load corresponding content if not already loaded
+        if (tabId === "chloropleth" && !chloroplethLoaded) {
+          loadScript("chloropleth.js");
+          chloroplethLoaded = true;
+        } else if (tabId === "rent-control" && !rentControlLoaded) {
+          loadScript("rent_control.js");
+          rentControlLoaded = true;
+        } else if (
+          (tabId === "bc-rent" || tabId === "bc-own") &&
+          !pieChartsLoaded
+        ) {
+          loadPieCharts();
+          pieChartsLoaded = true;
+        }
+      }
+
+      // Event listeners for tab clicks
+      document
+        .getElementById("chloropleth-tab")
+        .addEventListener("click", function () {
+          switchTab("chloropleth");
+        });
+
+      document
+        .getElementById("rent-control-tab")
+        .addEventListener("click", function () {
+          switchTab("rent-control");
+        });
+
+      // Add event listener for the new tab
+      document
+        .getElementById("bc-rent-tab")
+        .addEventListener("click", function () {
+          switchTab("bc-rent");
+        });
+
+      // Add event listener for the new tab
+      document
+        .getElementById("bc-own-tab")
+        .addEventListener("click", function () {
+          switchTab("bc-own");
+        });
+
+      // Function to dynamically load JavaScript files
+      function loadScript(scriptSrc) {
+        var script = document.createElement("script");
+        script.src = scriptSrc;
+
+        document.head.appendChild(script);
+      }
+
+      // Function to load pie charts
+      function loadPieCharts() {
+        // Sample data for demonstration
+        const dataRent = [
+          { label: "Over the age of 82", percent: 85 },
+          { label: "Under the age of 82", percent: 15 },
+        ];
+        const dataOwn = [
+          { label: "Over the age of 82", percent: 81 },
+          { label: "Under the age of 82", percent: 19 },
+        ];
+
+        // Call createPieChart function with containerId and data
+        createPieChart("pie-chart-container-rent", dataRent);
+        createLegend("legend-container-rent", dataRent);
+
+        createPieChart("pie-chart-container-own", dataOwn);
+        createLegend("legend-container-own", dataOwn);
+      }
+
+      // Function to create a pie chart
+      function createPieChart(containerId, data) {
+        const width = 300;
+        const height = 300;
+        const radius = Math.min(width, height) / 2;
+
+        const color = d3
+          .scaleOrdinal()
+          .domain(data.map((d) => d.label))
+          .range(d3.schemeCategory10);
+
+        const svg = d3
+          .select(`#${containerId}`)
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .append("g")
+          .attr("transform", `translate(${width / 2},${height / 2})`);
+
+        const pie = d3.pie().value((d) => d.percent);
+
+        const arc = d3.arc().innerRadius(0).outerRadius(radius);
+
+        const arcs = svg
+          .selectAll("arc")
+          .data(pie(data))
+          .enter()
+          .append("g")
+          .attr("class", "arc");
+
+        arcs
+          .append("path")
+          .attr("fill", (d) => color(d.data.label))
+          .attr("d", arc);
+
+        arcs
+          .append("text")
+          .attr("transform", (d) => `translate(${arc.centroid(d)})`)
+          .attr("text-anchor", "middle")
+          .attr("font-size", "0.85em")
+          .text((d) => `${d.data.percent}%`);
+      }
+
+      // Function to create legend
+      function createLegend(legendContainerId, data) {
+        const legendContainer = d3.select(`#${legendContainerId}`);
+
+        const legend = legendContainer
+          .selectAll(".legend-item")
+          .data(data)
+          .enter()
+          .append("div")
+          .attr("class", "legend-item")
+          .style("width", "25%") // Set width to a quarter of the container width
+          .style("padding", "5px"); // Add padding to each legend item
+
+        const legendColor = legend
+          .append("div")
+          .attr("class", "legend-color")
+          .style(
+            "background-color",
+            (d) => d3.schemeCategory10[data.indexOf(d)]
+          )
+          .style("display", "inline-block") // Ensure color block and text are inline
+          .style("width", "20px") // Set width of color block
+          .style("height", "20px"); // Set height of color block
+
+        // Center text vertically and horizontally
+        legendColor.style("line-height", "20px"); // Ensure vertical centering
+        legendColor.style("text-align", "center"); // Ensure horizontal centering
+
+        legend
+          .append("div")
+          .attr("class", "legend-text")
+          .style("display", "inline-block") // Ensure color block and text are inline
+          .style("padding-left", "5px") // Add padding to the left of the text
+          .style("vertical-align", "top") // Align text vertically
+          .text((d) => `${d.label}`);
+      }
+
+      // Initially load chloropleth.js when the page loads
+      window.onload = function () {
+        switchTab("chloropleth");
+      };
+    </script>
+  </body>
+</html>
