@@ -58,9 +58,11 @@
     <div class="tab" id="bc-rent-tab">BC Renters by age</div>
     <div class="tab" id="bc-own-tab">BC Owners by age</div>
 
+
     <!-- Tab contents -->
-    <div class="tab-content" id="chloropleth-content">
-      <div class="container"></div>
+    <div class="tab-content" id="chloropleth-content" style="white-space: nowrap;">
+      <div class="container" style="display: inline"></div>
+      <div id="chart" style="display: inline"> </div>
     </div>
     <div class="tab-content" id="rent-control-content">
       <!-- Content for rent control visualization goes here -->
@@ -84,10 +86,11 @@
       let chloroplethLoaded = false;
       let rentControlLoaded = false;
       let pieChartsLoaded = false;
+      let chartLoaded = false;
 
       // Function to handle tab switching
       function switchTab(tabId) {
-        // Hide all tab contents
+        // Hide all itab contents
         document.querySelectorAll(".tab-content").forEach((content) => {
           content.style.display = "none";
         });
@@ -112,6 +115,12 @@
         ) {
           loadPieCharts();
           pieChartsLoaded = true;
+        }
+
+        if ((tabId === "chloropleth" || tabId === "rent-control") && !chartLoaded) {
+          console.log("chart loaded");
+          loadScript("pie.js");
+          chartLoaded = true;
         }
       }
 

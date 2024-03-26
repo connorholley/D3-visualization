@@ -29,8 +29,11 @@ function loaded(error, topo, data) {
 
   provinceGeo.forEach(function (geo, i) {
     const provinceName = geo.properties.name;
+    console.log(provinceName);
     if (provinceName in data.canada) {
       provinceGeo[i].properties.ratio = data.canada[provinceName].ratio;
+      provinceGeo[i].properties.owner_with_children = data.canada[provinceName].owner_with_children;
+      provinceGeo[i].properties.renter_with_children = data.canada[provinceName].renter_with_children;
     } else {
       provinceGeo[i].properties.ratio = 0;
     }
@@ -73,6 +76,12 @@ function loaded(error, topo, data) {
     })
     .attr("d", canadaPaths)
     .on("mouseover", function (d) {
+      
+      var chartdata = [
+        {group: "Owners With Children", value: d.properties.owner_with_children},
+        {group: "Renters With Children", value: d.properties.renter_with_children,}
+      ];
+      update(chartdata, d.properties.name);
       var currentState = this;
       d3.select(this).style("stroke-width", 1.5);
       tooltip

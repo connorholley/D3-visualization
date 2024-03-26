@@ -1,100 +1,109 @@
 {
     "canada": {
       "Alberta": {
-        
+        "owner_with_children": 1,
+        "renter_with_children": 4,
         "ratio": 1.5,
         "is_rent_controlled":0,
         "longitude": -116.5765,
         "latitude": 53.9333
       },
       "British Columbia": {
-    
+        "owner_with_children": 10,
+        "renter_with_children": 4,
         "ratio": 2.5,
         "is_rent_controlled":1,
         "longitude": -127.6476,
         "latitude": 53.7267
       },
       "Manitoba": {
-      
+        "owner_with_children": 2,
+        "renter_with_children": 6,
         "ratio": 1.2,
         "is_rent_controlled":1,
-
         "population": 1338109,
         "longitude": -98.8139,
         "latitude": 53.7609
       },
       "New Brunswick": {
- 
+        "owner_with_children": 8,
+        "renter_with_children": 11,
         "ratio": 2.25,
-  
         "is_rent_controlled":0,
-    
         "longitude": -66.4619,
         "latitude": 46.5653
       },
       "Newfoundland and Labrador": {
-   
+        "owner_with_children": 10,
+        "renter_with_children": 5,
         "ratio": 0.9,
         "is_rent_controlled":0,
-
         "longitude": -57.6604,
         "latitude": 53.1355
       },
       "Northwest Territories": {
-
+        "owner_with_children": 1,
+        "renter_with_children": 1,
         "ratio": 1,
         "is_rent_controlled":0,
-
         "longitude": -124.8457,
         "latitude": 64.8255
       },
       "Nova Scotia": {
-     
+        "owner_with_children": 10,
+        "renter_with_children": 2,
         "ratio": 1.2,
         "is_rent_controlled":0,
-
         "longitude": -63.7443,
         "latitude": 44.682
       },
       "Ontario": {
-   
+        "owner_with_children": 22,
+        "renter_with_children": 1,
         "ratio": 1.8,
         "is_rent_controlled":1,
-
         "longitude": -85.3232,
         "latitude": 51.2538
       },
       "Prince Edward Island": {
-
+        "owner_with_children": 11,
+        "renter_with_children": 2,
         "ratio": 2.8,
         "is_rent_controlled":1,
-
         "longitude": -63.4168,
         "latitude": 46.5107
       },
-      "Québec": {
-
+      "Quebec": {
+        "owner_with_children": 9,
+        "renter_with_children": 4,
         "ratio": 1.9,
         "is_rent_controlled":1,
-
         "longitude": -73.5491,
         "latitude": 52.9399
       },
       "Saskatchewan": {
- 
+        "owner_with_children": 1,
+        "renter_with_children": 3,
         "ratio": 2,
         "is_rent_controlled":0,
-
         "longitude": -106.4509,
         "latitude": 52.9399
       },
-      "Yukon": {
-    
+      "Yukon Territory": {
+        "owner_with_children": 12,
+        "renter_with_children": 11,
         "ratio": 1,
         "is_rent_controlled":1,
-
         "longitude": -135,
         "latitude": 64
+      },
+      "Nunavut": {
+        "owner_with_children": 0,
+        "renter_with_children": 1,
+        "ratio": 1,
+        "is_rent_controlled":1,
+        "longitude": -84.8896,
+        "latitude": 64.2480
       }
     }
   }
