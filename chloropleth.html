@@ -58,12 +58,31 @@
     <div class="tab" id="bc-rent-tab">BC Renters by age</div>
     <div class="tab" id="bc-own-tab">BC Owners by age</div>
 
-
-    <!-- Tab contents -->
-    <div class="tab-content" id="chloropleth-content" style="white-space: nowrap;">
-      <div class="container" style="display: inline"></div>
-      <div id="chart" style="display: inline"> </div>
+    <div
+      class="tab-content"
+      id="chloropleth-content"
+      style="white-space: nowrap; position: relative"
+    >
+      <div
+        class="container"
+        style="display: inline-block; width: 50%; vertical-align: top"
+      >
+        <!-- Your container content here -->
+      </div>
+      <div
+        id="chart"
+        style="
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          display: inline-block;
+          width: 50%;
+        "
+      >
+        <!-- Your chart content here -->
+      </div>
     </div>
+
     <div class="tab-content" id="rent-control-content">
       <!-- Content for rent control visualization goes here -->
     </div>
@@ -117,7 +136,10 @@
           pieChartsLoaded = true;
         }
 
-        if ((tabId === "chloropleth" || tabId === "rent-control") && !chartLoaded) {
+        if (
+          (tabId === "chloropleth" || tabId === "rent-control") &&
+          !chartLoaded
+        ) {
           console.log("chart loaded");
           loadScript("pie.js");
           chartLoaded = true;
